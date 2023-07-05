@@ -1,0 +1,11 @@
+{
+    "name": "checkpoint-app",
+    "scripts": {
+        "start": "node src/index.js"
+    },
+    "dependencies": {
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "mysql": "^2.18.1"
+    }
+}
