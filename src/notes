@@ -1,0 +1,17 @@
+all routes for user (delete, etc. )
+/getroute
+/get/:id
+/post
+/put/:id
+/delete/:id
+
+products 
+add products route post:
+/post
+
+
+cart - joint route
+
+authenication route: 
+/register
+/signup 
