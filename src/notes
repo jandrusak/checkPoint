@@ -14,4 +14,73 @@ cart - joint route
 
 authenication route: 
 /register
-/signup 
+/signup
+
+
+
+
+Things i need to do in general
+Have to manage users:
+    Need to be able create users
+        - register function (everyone can do this bc you dont need special permissions)
+            <!-- Route: POST /register  -->
+    need to be able to delete users
+        - (only admin can do this)
+            <!-- Route: DELETE /users/:id -->
+    need to update users
+        - user can update own info
+        - admin can update everyones info
+            <!-- PUT /users/:id  -->
+        IF ID IS THE SAME ID AS LOGGED IN USER, OR THE LOGGEDIN USER IS AN ADMIN, THEY ARE ALLOWED TO UPDATE INFO
+    need to see list of users
+        - just admin can see this
+            <!-- GET /users -->
+    need to see specific info for user
+        - user can get own info
+            <!-- GET /users/:id -->
+        - admin can get everyones info
+        IF ID IS THE SAME ID AS LOGGED IN USER, OR THE LOGGEDIN USER IS AN ADMIN, THEY ARE ALLOWED TO GET(see) INFO
+
+This includes minimum 7 routes (so far)
+
+
+
+
+have to manage products
+    need to see products 
+        - all users can see but need to be logged in
+            GET /products
+    need to add product 
+        - just admin
+            Route: POST /product 
+    need to update product
+        - just admin
+            Route: POST /product
+    need to delete product 
+        - just admin
+            Route: DELETE /product
+    need to get specific info about product
+        - everyone (should already be logged in)
+    
+
+
+have to manage cart (starting cart)
+    need create an cart
+        - user (logged in) 
+    need to see list of carts
+        - user (can see own cart) 
+        - and admin (can see all carts)
+    need to see detials about a cart
+       - user (can see own cart) 
+        - and admin (can see all carts)
+    update cart (adding products or removing)
+        - user can update
+    delete a cart 
+        - user (can see own cart BEFORE confirmed) 
+        - and admin (can see all carts)
+<!-- 
+    confirm order 
+        - user can confirm  -->
+
+
+

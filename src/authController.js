@@ -8,8 +8,8 @@ let jwt = require("jsonwebtoken");
 //get the email and password from the request
 let registerUser = async function(req, res){
     // fetching from request
-    let firstname = req.body.firstname;
-    let lastname = req.body.lastname;
+    let firstname = req.body.first_name;
+    let lastname = req.body.last_name;
     let phone = req.body.phone;
     let email = req.body.email;
     let password = req.body.pwd;

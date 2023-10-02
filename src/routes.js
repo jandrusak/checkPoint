@@ -1,33 +1,55 @@
 let express = require("express");
 
+
 let router = express.Router();
 
 let controller = require("./controller");
 
 let authsMiddleware = require("../src/mwauths");
 
-// router.get("/checkpoint", controller.listUsers);
+//users controllers:
+router.get("/users", controller.getAllUsers);
 
-router.get("/checkpoint/:id", controller.getUsers);
+router.get("/users/:id", controller.getUserById);
 
-router.delete("/checkpoint/:id", controller.deleteUsers);
+router.delete("/users/:id", controller.deleteUsers);
 
-router.post("/checkpoint", controller.addProducts);
-
-// router.put("/checkpoint/:id", controller.updateUsers);
-
+router.put("/users/:id", controller.updateUsers);
 
 
-//adding middleware
-router.post("/hello", function(req,res){
-    res.json("Hello there!");
-})
 
-//protected route and require auth: get jwt and validate
-//middleware should be applied to all applicable routes
-// router.post("/welcomeBack", authsMiddleware.checkJWT, function(req,res){
-//     res.json("wellcome back!");
-// })
+//products controllers: check the file locations
+router.get("/Products", controller.getAllProducts);
+
+router.get("/Products/:id", controller.getProductById);
+
+router.post("/Products", controller.addProducts);
+
+router.put("/Products/:id", controller.updateProduct);
+
+router.delete("/Products/:id", controller.deleteProducts);
+
+
+
+//cart controllers:
+// router.delete("/Cart", authsMiddleware.checkJWT, controller.deleteProductFromCart);
+router.delete("/Cart/:userId/products/:productId", authsMiddleware.checkJWT, controller.deleteProductFromCart);
+
+router.get("/Carts", controller.getAllCarts);
+
+router.post("/Cart/:user_id", authsMiddleware.checkJWT, controller.addProductByUId)
+
+router.get("/Products/:id", authsMiddleware.checkJWT, controller.getCartByUId)
+
+// router.put("/Cart/:id", controller.updateCartByUId)
+
+
+
+
+
+router.get("/Products/:id", authsMiddleware.checkJWT, controller.getCartByUId);
+//MUST HAVE MIDDLEWARE APPLIED
+// router.put("/Products/:id", controller.deleteProductFromCart);
 
 
 
