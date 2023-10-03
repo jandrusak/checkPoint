@@ -37,10 +37,8 @@ router.delete("/Cart/:userId/products/:productId", authsMiddleware.checkJWT, con
 
 router.get("/Carts", controller.getAllCarts);
 
-router.post("/Cart/:user_id", authsMiddleware.checkJWT, controller.addProductByUId)
-
-router.get("/Products/:id", authsMiddleware.checkJWT, controller.getCartByUId)
-
+router.post("/Cart", authsMiddleware.checkJWT, controller.addProductByUId)
+router.get("/Cart", authsMiddleware.checkJWT, controller.getCartByUId)
 // router.put("/Cart/:id", controller.updateCartByUId)
 
 

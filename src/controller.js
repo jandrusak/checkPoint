@@ -1,6 +1,6 @@
 let db = require("./db");
 
-//////////////////// users controllers
+//USERS CONTROLLERS
 let getAllUsers = function(req, res){
     let sql = 'select * from users'
     db.query(sql, function(err, results){
@@ -21,7 +21,6 @@ let getUserById = function(req, res){
     let id = req.params.id;
     let sql = 'select * from users where user_id = ?'
     let params = [id]
-
     db.query(sql, params, function(err, results){
         if (err){
                 console.log("failed", err);
@@ -40,7 +39,6 @@ let deleteUsers = function(req, res){
     let id = req.params.id;
     let sql = "delete from users where user_id = ?";
     let params = [id];
-
     db.query(sql, params, function(err, results){
         if(err) {
             console.log("delete query failed", err); 
@@ -49,7 +47,7 @@ let deleteUsers = function(req, res){
             res.sendStatus(204);
         }
 })};
-//test
+
 let updateUsers = function(req, res){
     let id = req.params.id;
     let { email, pwd, first_name, last_name, phone} = req.body;
@@ -76,21 +74,7 @@ let updateUsers = function(req, res){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/////////////////////products controller:
-//working
+//PRODUCTS CONTROLLERS
 let getAllProducts = function(req, res){
     let sql = 'select * from Products'
     db.query(sql, function(err, results){
@@ -107,7 +91,6 @@ let getAllProducts = function(req, res){
     })
 };
 
-//working
 let addProducts = function(req, res){
     let { product_title, product_size, description, price } = req.body;
 
@@ -115,10 +98,8 @@ let addProducts = function(req, res){
         res.status(400).json("All fields are required"); 
         return;
     }
-    
     let sql = "insert into Products (product_title, product_size, description, price) values (?, ?, ?, ?)"
     let params = [product_title, product_size, description, price];
-
     db.query(sql, params, function(err, results){
         if(err){
             console.log("Failed to insert into the database", err);
@@ -129,12 +110,10 @@ let addProducts = function(req, res){
     })
 };
 
-//works
 let getProductById = function(req, res){
     let id = req.params.id;
     let sql = 'select * from Products where product_id = ?'
     let params = [id]
-
     db.query(sql, params, function(err, results){
         if (err){
                 console.log("failed", err);
@@ -148,12 +127,11 @@ let getProductById = function(req, res){
         }
     })
 };
-//issue with foriegn key? 
+
 let deleteProducts = function(req, res){
     let id = req.params.id;
     let sql = "delete from Products where product_id = ?";
     let params = [id];
-
     db.query(sql, params, function(err, results){
         if(err) {
             console.log("delete query failed", err); 
@@ -167,15 +145,11 @@ let deleteProducts = function(req, res){
         }
 })};
 
-
-
-//test
 let updateProduct = function(req, res){
     let id = req.params.id;
     let { product_title, product_size, description, price} = req.body;
-    let sql = "UPDATE product set product_title = ?, product_size = ?, description = ?, price = ? WHERE product_id = ?";
+    let sql = "UPDATE Products set product_title = ?, product_size = ?, description = ?, price = ? WHERE product_id = ?";
     let params = [product_title, product_size, description, price, id];
-
     db.query(sql, params, function(err, results){
         if (err){
                 console.log("update failed", err);
@@ -191,10 +165,7 @@ let updateProduct = function(req, res){
 };
 
 
-
-
-
-// cart -----------------------------------------------------------------------------------
+//CARTS CONTROLLERS
 let getAllCarts = function(req, res){
     let sql = 'select * from Cart'
     db.query(sql, function(err, results){
@@ -210,11 +181,6 @@ let getAllCarts = function(req, res){
         }
     })
 };
-
-
-
-
-
 
 //get/cart/:user_id the cart items for user by iD 
 //MUST HAVE MIDDLEWARE APPLIED
@@ -277,8 +243,6 @@ let deleteProductFromCart = function(req, res){
         }
 })};
 
-
-//add product to the cart by the user (user_id)
 //MUST HAVE MIDDLEWARE APPLIED
 let addProductByUId = function(req, res){
     let userId = req.userToken.id
@@ -290,14 +254,7 @@ let addProductByUId = function(req, res){
     }
     let sql = "INSERT INTO Cart (user_id, product_id) VALUES (?, ?)";
     let params = [userId, product_id];
-
                 db.query(sql, params, function(err, results){
-                    // if(err){
-                    //     console.log("failed to inset into Cart", err);
-                    //     res.status(500).json({message: "uh oh error"})
-                    // } else {
-                    //     res.status(201).json({message: "product added"})
-                    // }
                     if(err){
                         console.log("SQL Query:", sql);
                         console.log("Parameters:", params);
@@ -311,22 +268,7 @@ let addProductByUId = function(req, res){
 
 }
 
-
-
-
-
-
-
 //will at some point need to specify where i want all items/products by speci
-
-
-
-
-
-
-
-
-
 
 module.exports = {
     // listUsers,
@@ -340,20 +282,12 @@ module.exports = {
     getAllProducts,
     getProductById, 
     deleteProducts,
-
-
     deleteProductFromCart,
     // updateCartByUId, 
     getAllCarts,
     getCartByUId,
     addProductByUId
 };
-
-
-
-
-
-
 
 //examples from previous assignments:
 
