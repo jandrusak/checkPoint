@@ -92,14 +92,14 @@ let getAllProducts = function(req, res){
 };
 
 let addProducts = function(req, res){
-    let { product_title, product_size, description, price } = req.body;
+    let { product_title, product_size, description, price, image_url } = req.body;
 
-    if(!product_title || !product_size || !description|| !price) {
+    if(!product_title || !product_size || !description|| !price || !image_url) {
         res.status(400).json("All fields are required"); 
         return;
     }
-    let sql = "insert into Products (product_title, product_size, description, price) values (?, ?, ?, ?)"
-    let params = [product_title, product_size, description, price];
+    let sql = "insert into Products (product_title, product_size, description, price, image_url) values (?, ?, ?, ?, ?)"
+    let params = [product_title, product_size, description, price, image_url];
     db.query(sql, params, function(err, results){
         if(err){
             console.log("Failed to insert into the database", err);
@@ -165,6 +165,9 @@ let updateProduct = function(req, res){
 };
 
 
+//need to add addproductsbyuserid
+
+
 //CARTS CONTROLLERS
 let getAllCarts = function(req, res){
     let sql = 'select * from Cart'
@@ -195,32 +198,28 @@ let getCartByUId = function(req, res){
                 if(results.length == 0){
                     res.sendStatus(404); 
                 } else {
-                    res.json(results[0]);
+                    res.json(results);
                 }
         }
     })
 };
+// add a product to the cart for user by its iD
+// post/cart/:productId 
+let addToCartByProductId = function(req, res){
+    let userId = req.userToken.id;
+    let productId = req.body.productId;
+    let sql = "INSERT INTO Cart (user_id, product_id) VALUES (?, ?)";
+    let params = [userId, productId];
 
-//post/cart/:userid add a product to the cart for user by their iD
-// let updateCartByUId = function(req, res){
-//     let id = req.params.id;
-//     let { email, pwd, first_name, last_name, phone} = req.body;
-//     let sql = "UPDATE users set email = ?, pwd = ?, first_name = ?, last_name = ?, phone = ? WHERE user_id = ?";
-//     let params = [email, pwd, first_name, last_name, phone, id];
-
-//     db.query(sql, params, function(err, results){
-//         if (err){
-//                 console.log("update failed", err);
-//                 res.sendStatus(500);
-//         }   else {
-//                 if(results.affectedRows === 0){
-//                     res.sendStatus(204); 
-//                 } else {
-//                     res.json({message: "Update Successful", results});
-//                 }
-//         }
-//     })
-// };
+    db.query(sql, params, function(err, results){
+        if (err){
+                console.log("insert into cart failed", err);
+                res.status(500).json({message: "error"});
+        }   else {
+                    res.status(201).json({message: "Product added"}); 
+                } 
+        });
+    };
 
 
 //delete/cart/:userid/:productid product from cart by user id and product id 
@@ -243,7 +242,7 @@ let deleteProductFromCart = function(req, res){
         }
 })};
 
-//MUST HAVE MIDDLEWARE APPLIED
+// MUST HAVE MIDDLEWARE APPLIED
 let addProductByUId = function(req, res){
     let userId = req.userToken.id
     let { product_id } = req.body;
@@ -286,7 +285,8 @@ module.exports = {
     // updateCartByUId, 
     getAllCarts,
     getCartByUId,
-    addProductByUId
+    addProductByUId,
+    addToCartByProductId
 };
 
 //examples from previous assignments:

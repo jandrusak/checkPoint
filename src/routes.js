@@ -42,10 +42,9 @@ router.get("/Cart", authsMiddleware.checkJWT, controller.getCartByUId)
 // router.put("/Cart/:id", controller.updateCartByUId)
 
 
+router.post("/addCart", authsMiddleware.checkJWT, controller.addToCartByProductId)
 
-
-
-router.get("/Products/:id", authsMiddleware.checkJWT, controller.getCartByUId);
+router.get("/Cart/:id", authsMiddleware.checkJWT, controller.getCartByUId);
 //MUST HAVE MIDDLEWARE APPLIED
 // router.put("/Products/:id", controller.deleteProductFromCart);
 
