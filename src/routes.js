@@ -1,4 +1,7 @@
 let express = require("express");
+// var require: (id: string) => any;
+// let app = express();
+
 
 
 let router = express.Router();
@@ -33,7 +36,7 @@ router.delete("/Products/:id", controller.deleteProducts);
 
 //cart controllers:
 // router.delete("/Cart", authsMiddleware.checkJWT, controller.deleteProductFromCart);
-router.delete("/Cart/:userId/products/:productId", authsMiddleware.checkJWT, controller.deleteProductFromCart);
+router.delete("/Cart/:product_id", authsMiddleware.checkJWT, controller.deleteProductFromCart);
 
 router.get("/Carts", controller.getAllCarts);
 

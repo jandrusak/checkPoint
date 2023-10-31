@@ -225,7 +225,7 @@ let addToCartByProductId = function(req, res){
 //delete/cart/:userid/:productid product from cart by user id and product id 
 let deleteProductFromCart = function(req, res){
     let userId = req.userToken.id;
-    let productId = req.body.product_id;
+    let productId = req.params.product_id;
     let sql = "delete from Cart where user_id = ? AND product_id = ?";
     let params = [userId, productId];
 
@@ -237,6 +237,7 @@ let deleteProductFromCart = function(req, res){
             if (results.affectedRows === 0) {
                 res.status(404).json({message: "Product not found in cart"});
             } else {
+                console.log("")
                 res.status(200).json({message: "Product deleted from cart"});
             }
         }
