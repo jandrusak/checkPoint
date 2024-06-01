@@ -99,10 +99,7 @@ let loginUser = function(req, res){
         console.log("failed when verifying the hash", err);
         res.sendStatus(401);
     }
-
-
     });
-
 };
 
 module.exports = {

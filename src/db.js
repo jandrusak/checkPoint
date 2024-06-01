@@ -8,17 +8,9 @@ let connection = mysql.createPool({
     port: process.env.DB_PORT, 
     database: process.env.Db_Name
 
-    // database: "database-1"
-    //not sure if that is the right default name
 });
 
-// module.exports = pool;
-
-// connection.connect();
-//sned query in between start and end here
-
 let sql = "select now();"
-
 
 connection.query(sql, function (err, results){
     //what to do when query results come back? 
@@ -29,5 +21,4 @@ connection.query(sql, function (err, results){
     }
 });
 
-// module.exports = pool;
 module.exports = connection;

@@ -1,5 +1,12 @@
 let db = require("./db");
 
+//insert payment
+let paypal = require('@paypal/checkout-server-sdk');
+let environment = new paypal.core.SandboxEnvironment('YOUR_CLIENT_ID', 'YOUR_CLIENT_SECRET');
+let client = new paypal.core.PayPalHttpClient(environment);
+
+
+
 //USERS CONTROLLERS
 let getAllUsers = function(req, res){
     let sql = 'select * from users'
@@ -268,6 +275,41 @@ let addProductByUId = function(req, res){
 
 }
 
+// Payment controllers
+let createOrder = async (req, res) => {
+    let request = new paypal.orders.OrdersCreateRequest();
+    request.prefer("return=representation");
+    request.requestBody({
+        intent: 'CAPTURE',
+        purchase_units: [{
+            amount: {
+                currency_code: 'USD',
+                value: '0.01' // Replace with the actual amount
+            }
+        }]
+    });
+
+    try {
+        let order = await client.execute(request);
+        res.json({ id: order.result.id });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
+let captureOrder = async (req, res) => {
+    let { orderID } = req.body;
+    let request = new paypal.orders.OrdersCaptureRequest(orderID);
+    request.requestBody({});
+
+    try {
+        let capture = await client.execute(request);
+        res.json(capture.result);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
 //will at some point need to specify where i want all items/products by speci
 
 module.exports = {
@@ -276,7 +318,6 @@ module.exports = {
     getAllUsers,
     deleteUsers, 
     updateUsers,
-    
     addProducts, 
     updateProduct,
     getAllProducts,
@@ -287,7 +328,9 @@ module.exports = {
     getAllCarts,
     getCartByUId,
     addProductByUId,
-    addToCartByProductId
+    addToCartByProductId,
+    createOrder,
+    captureOrder
 };
 
 //examples from previous assignments:
