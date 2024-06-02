@@ -21,10 +21,10 @@ router.delete("/Products/:id", controller.deleteProducts);
 router.delete("/Cart/:product_id", authsMiddleware.checkJWT, controller.deleteProductFromCart);
 router.get("/Carts", controller.getAllCarts);
 router.post("/Cart", controller.addProductByUId)
-router.get("/Cart", authsMiddleware.checkJWT, controller.getCartByUId)
+router.get("/Cart", controller.getCartByUId)
 // router.put("/Cart/:id", controller.updateCartByUId)
 router.post("/addCart", controller.addToCartByProductId)
-router.get("/Cart/:id", authsMiddleware.checkJWT, controller.getCartByUId);
+router.get("/Cart/:id", controller.getCartByUId);
 //MUST HAVE MIDDLEWARE APPLIED
 // router.put("/Products/:id", controller.deleteProductFromCart);
 
