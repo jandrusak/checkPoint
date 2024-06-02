@@ -194,23 +194,41 @@ let getAllCarts = function(req, res){
 
 //get/cart/:user_id the cart items for user by iD 
 //MUST HAVE MIDDLEWARE APPLIED
+// let getCartByUId = function(req, res){
+//     // let userId = req.userToken.id
+//     let userId = req.query.userId;
+//     let sql = 'select * from Cart where user_id = ?'
+//         db.query(sql, userId, function(err, results){
+//         if (err){
+//                 console.log("failed", err);
+//                 res.sendStatus(500);
+//         }   else {
+//                 if(results.length == 0){
+//                     res.sendStatus(404); 
+//                 } else {
+//                     res.json(results);
+//                 }
+//         }
+//     })
+// };
 let getCartByUId = function(req, res){
-    // let userId = req.userToken.id
     let userId = req.query.userId;
-    let sql = 'select * from Cart where user_id = ?'
-        db.query(sql, userId, function(err, results){
+    let sql = 'SELECT * FROM Cart WHERE user_id = ?';
+    db.query(sql, [userId], function(err, results){
         if (err){
-                console.log("failed", err);
-                res.sendStatus(500);
-        }   else {
-                if(results.length == 0){
-                    res.sendStatus(404); 
-                } else {
-                    res.json(results);
-                }
+            console.log("failed", err);
+            res.sendStatus(500);
+        } else {
+            if(results.length == 0){
+                res.sendStatus(404); 
+            } else {
+                res.json(results);
+            }
         }
-    })
+    });
 };
+
+
 // add a product to the cart for user by its iD
 // post/cart/:productId 
 let addToCartByProductId = function(req, res){
