@@ -213,8 +213,7 @@ let getCartByUId = function(req, res){
 // add a product to the cart for user by its iD
 // post/cart/:productId 
 let addToCartByProductId = function(req, res){
-    let userId = req.userToken.id;
-    let productId = req.body.productId;
+    let { userId, productId } = req.body;
     let sql = "INSERT INTO Cart (user_id, product_id) VALUES (?, ?)";
     let params = [userId, productId];
 
