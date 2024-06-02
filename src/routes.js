@@ -20,14 +20,11 @@ router.delete("/Products/:id", controller.deleteProducts);
 // router.delete("/Cart", authsMiddleware.checkJWT, controller.deleteProductFromCart);
 router.delete("/Cart/:product_id", authsMiddleware.checkJWT, controller.deleteProductFromCart);
 router.get("/Carts", controller.getAllCarts);
-router.post("/Cart", controller.addProductByUId)
-router.get("/Cart", controller.getCartByUId)
+router.post("/Cart",  authsMiddleware.checkJWT, controller.addProductByUId)
+router.get("/Cart", authsMiddleware.checkJWT, controller.getCartByUId)
 // router.put("/Cart/:id", controller.updateCartByUId)
 router.post("/addCart", controller.addToCartByProductId)
-router.get("/Cart/:id", controller.getCartByUId);
-//MUST HAVE MIDDLEWARE APPLIED
-// router.put("/Products/:id", controller.deleteProductFromCart);
-
+router.get("/Cart/:id",  authsMiddleware.checkJWT, controller.getCartByUId);
 
 
 // payment controllers (authentication required)
