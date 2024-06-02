@@ -195,7 +195,8 @@ let getAllCarts = function(req, res){
 //get/cart/:user_id the cart items for user by iD 
 //MUST HAVE MIDDLEWARE APPLIED
 let getCartByUId = function(req, res){
-    let userId = req.userToken.id
+    // let userId = req.userToken.id
+    let userId = req.query.userId;
     let sql = 'select * from Cart where user_id = ?'
         db.query(sql, userId, function(err, results){
         if (err){
@@ -214,6 +215,8 @@ let getCartByUId = function(req, res){
 // post/cart/:productId 
 let addToCartByProductId = function(req, res){
     let { userId, productId } = req.body;
+    // let userId = req.userToken.id;
+    // let productId = req.body.productId;
     let sql = "INSERT INTO Cart (user_id, product_id) VALUES (?, ?)";
     let params = [userId, productId];
 
